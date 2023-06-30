@@ -4,6 +4,7 @@ GEM
     graphql (2.0.24)
     minitest (5.18.1)
     rake (13.0.1)
+    to_boolean (1.0.2)
 
 PLATFORMS
   ruby
@@ -12,6 +13,7 @@ DEPENDENCIES
   graphql (~> 2.0.0)
   minitest
   rake
+  to_boolean (~> 1.0, >= 1.0.2)
 
 BUNDLED WITH
    2.1.4
