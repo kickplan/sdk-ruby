@@ -6,7 +6,23 @@
 # require "to_boolean"
 
 module Kickplan
+  require_relative "kickplan/configuration"
+  require_relative "kickplan/registry"
   require_relative "kickplan/version"
+
+  extend Configuration
+
+  def self.[](name=:default)
+    Registry[name]
+  end
+
+  def self.const_missing(name)
+    self[].const_get(name)
+  end
+end
+
+__END__
+Kickplan::Features.evaluate.(:chat, type: :boolean, default: false)
 
   #def self.configure(api_key, domain="app.kickplan.io")
   #  @@api_key = api_key
