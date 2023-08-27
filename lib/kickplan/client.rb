@@ -1,22 +1,27 @@
 # frozen_string_literal: true
 
-require "faraday"
+require "forwardable"
 
 module Kickplan
   require_relative "configuration"
   require_relative "resources"
 
   class Client < Module
+    require_relative "client/response"
+
+    extend Forwardable
+
     attr_reader :semaphore
+
+    delegate %i(get post put delete) => :connection
 
     def initialize
       extend Configuration
 
-      # Set defaults to global configuration
+      # Use global configuration as client defaults
       config.update(Kickplan.config.values)
 
-      # Clients are singletons and all mutations need
-      # to be thread-safe.
+      # Clients are singletons, mutations should be thread-safe
       @semaphore = Mutex.new
     end
 
@@ -24,10 +29,22 @@ module Kickplan
       return @connection if defined?(@connection)
 
       semaphore.synchronize do
-        @connection = Faraday::Connection.new(conn_options) do |conn|
-
-        end
+        @connection = Faraday::Connection.new(conn_options)
       end
+    end
+
+
+    private
+
+    def conn_options
+      {
+        url: config.endpoint,
+        proxy: config.proxy,
+        builder: config.middleware,
+        headers: {
+          user_agent: config.user_agent
+        }
+      }
     end
 
     def const_missing(name)
@@ -39,15 +56,6 @@ module Kickplan
         Resources.const_get(name).new(self).tap do |resource|
           self.const_set(name, resource)
         end
-      end
-    end
-
-    private
-
-    def conn_options
-      {}.tap do |options|
-        options[:url] = config.endpoint
-        options[:proxy] = config.proxy unless config.proxy.nil?
       end
     end
   end

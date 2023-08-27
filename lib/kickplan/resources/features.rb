@@ -3,7 +3,8 @@
 module Kickplan
   module Resources
     class Features < Resource
-      def variant(key, context={}, options={})
+      def variant(key, options = {})
+
       end
     end
   end

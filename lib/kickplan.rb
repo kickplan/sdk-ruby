@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-# require "graphql"
-# require "net/http"
-# require "json"
-# require "to_boolean"
-
 module Kickplan
   require_relative "kickplan/configuration"
   require_relative "kickplan/registry"
@@ -12,12 +7,21 @@ module Kickplan
 
   extend Configuration
 
-  def self.[](name=:default)
-    Registry[name]
-  end
+  class << self
+    def client(name = :default)
+      Registry[name]
+    end
+    alias_method :[], :client
 
-  def self.const_missing(name)
-    self[].const_get(name)
+    def clients
+      Registry.clients
+    end
+
+    private
+
+    def const_missing(name)
+      client.const_get(name)
+    end
   end
 end
 
