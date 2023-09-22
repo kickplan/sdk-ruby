@@ -2,10 +2,12 @@
 
 require "spec_helper"
 
-RSpec.describe Kickplan::Features do
-  subject(:features) { described_class }
+RSpec.describe Kickplan::Resources::Features do
+  let(:client) { Kickplan.client(:example) }
 
-  describe ".variant", vcr: { cassette_name: "feature" } do
+  subject(:features) { described_class.new(client) }
+
+  describe "#variant", vcr: { cassette_name: "feature" } do
     let(:key) { "digital-merch-products" }
     let(:params) {{
       context: {
@@ -14,7 +16,7 @@ RSpec.describe Kickplan::Features do
     }}
 
     it "creates a POST request for 'features/:key'" do
-      expect(Kickplan.client).to receive(:post).
+      expect(client).to receive(:post).
         with("features/#{key}", hash_including(params)).and_call_original
 
       features.variant(key, params)
@@ -42,7 +44,7 @@ RSpec.describe Kickplan::Features do
     end
   end
 
-  describe ".variants", vcr: { cassette_name: "features" } do
+  describe "#variants", vcr: { cassette_name: "features" } do
     let(:params) {{
       context: {
         account_id: "a6a9cd9a-77af-4c1a-bc8d-4339eb00a081"
@@ -50,7 +52,7 @@ RSpec.describe Kickplan::Features do
     }}
 
     it "creates a POST request for 'features'" do
-      expect(Kickplan.client).to receive(:post).
+      expect(client).to receive(:post).
         with("features", hash_including(params)).and_call_original
 
       features.variants(params)

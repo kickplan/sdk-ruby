@@ -10,9 +10,9 @@ end
 require "dry/core"
 
 module Kickplan
-  module Registry
-    require_relative "client"
+  require_relative "client"
 
+  module Registry
     extend Dry::Core::Container::Mixin
 
     register(:clients, memoize: true) { Concurrent::Map.new }
