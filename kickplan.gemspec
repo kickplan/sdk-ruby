@@ -23,10 +23,14 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "concurrent-ruby", ">= 1.0"
   spec.add_runtime_dependency "dry-configurable", ">= 1.0"
   spec.add_runtime_dependency "dry-core", ">= 1.0"
+  spec.add_runtime_dependency "dry-struct", ">= 1.0"
   spec.add_runtime_dependency "faraday", ">= 1.0"
 
   spec.add_development_dependency "bundler", "~> 2.0"
+  spec.add_development_dependency "dotenv", "~> 2.0"
   spec.add_development_dependency "pry", "~> 0.14"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "webmock", "~> 3.5"
+  spec.add_development_dependency "vcr", "~> 6.0"
 end

@@ -7,8 +7,6 @@ module Kickplan
   require_relative "resources"
 
   class Client < Module
-    require_relative "client/response"
-
     extend Forwardable
 
     attr_reader :semaphore
@@ -32,7 +30,6 @@ module Kickplan
         @connection = Faraday::Connection.new(conn_options)
       end
     end
-
 
     private
 

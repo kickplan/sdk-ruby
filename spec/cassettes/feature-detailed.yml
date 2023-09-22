@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<KICKPLAN_ENDPOINT>features/digital-merch-products"
+    body:
+      encoding: UTF-8
+      string: '{"context":{"account_id":"a6a9cd9a-77af-4c1a-bc8d-4339eb00a081"},"detailed":true}'
+    headers:
+      User-Agent:
+      - Kickplan SDK v0.1.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 22 Sep 2023 03:35:15 GMT
+      Server:
+      - Fly/e440b950 (2023-09-20)
+      X-Request-Id:
+      - F4cbOOsDO6aK0WAAAAJR
+      Transfer-Encoding:
+      - chunked
+      Via:
+      - 1.1 fly.io
+      Fly-Request-Id:
+      - 01HAXF9F8ZDBYFE3EWNVQN3S56-sea
+    body:
+      encoding: ASCII-8BIT
+      string: '{"error_code":null,"key":"digital-merch-products","metadata":{},"value":true,"variant":"true"}'
+  recorded_at: Fri, 22 Sep 2023 03:35:15 GMT
+recorded_with: VCR 6.2.0
