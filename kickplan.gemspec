@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "dry-configurable", ">= 1.0"
   spec.add_runtime_dependency "dry-core", ">= 1.0"
   spec.add_runtime_dependency "dry-struct", ">= 1.0"
+  spec.add_runtime_dependency "dry-types", ">= 1.7"
   spec.add_runtime_dependency "faraday", ">= 1.0"
 
   spec.add_development_dependency "bundler", "~> 2.0"
