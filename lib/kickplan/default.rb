@@ -2,6 +2,10 @@
 
 require "faraday"
 
+# Explicit requires for Faraday < 2.0
+require "faraday/request/json"
+require "faraday/response/json"
+
 module Kickplan
   require_relative "middleware/raise_error"
   require_relative "version"
