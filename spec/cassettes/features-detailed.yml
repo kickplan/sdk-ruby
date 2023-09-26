@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<KICKPLAN_ENDPOINT>features"
+    body:
+      encoding: UTF-8
+      string: '{"context":{"account_id":"a6a9cd9a-77af-4c1a-bc8d-4339eb00a081"},"detailed":true}'
+    headers:
+      User-Agent:
+      - Kickplan SDK v0.1.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 22 Sep 2023 03:41:04 GMT
+      Server:
+      - Fly/e440b950 (2023-09-20)
+      X-Request-Id:
+      - F4cbikV-_DIp0rUAAALR
+      Transfer-Encoding:
+      - chunked
+      Via:
+      - 1.1 fly.io
+      Fly-Request-Id:
+      - 01HAXFM4G12953YAGV78P63TWK-sea
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"error_code":null,"key":"event-page-calendar","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"integration-constant-contact","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"stream-studio-http-push-pipeline","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"digital-merch-products","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"advanced-media-library-management","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"rental-products","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"org-dashboard-overview-beta","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"point-of-sale","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"issue-inventory","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"vod","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"link-devices","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"redemption-code-batches","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"in-person-ticketing","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"integration-goldstar","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"free-price-point","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"low-price-point","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"bundle-products","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"white-label","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"org-dashboard-event-summary-report-beta","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"subscription-products","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"integration-webhook","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"geoblocking","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"stream-studio-v3","metadata":{},"value":false,"variant":"false"},{"error_code":null,"key":"pro-election","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"event-interest","metadata":{},"value":true,"variant":"true"},{"error_code":null,"key":"configurable-device-limit","metadata":{},"value":true,"variant":"true"}]'
+  recorded_at: Fri, 22 Sep 2023 03:41:05 GMT
+recorded_with: VCR 6.2.0
