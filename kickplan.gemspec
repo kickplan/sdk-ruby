@@ -18,11 +18,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.required_ruby_version = ">= 2.7.0"
 
   spec.add_runtime_dependency "concurrent-ruby", ">= 1.0"
   spec.add_runtime_dependency "dry-configurable", ">= 1.0"
-  spec.add_runtime_dependency "dry-core", ">= 1.0"
   spec.add_runtime_dependency "dry-struct", ">= 1.0"
   spec.add_runtime_dependency "dry-types", ">= 1.7"
   spec.add_runtime_dependency "faraday", ">= 1.0"
