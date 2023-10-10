@@ -7,7 +7,7 @@ Dotenv.load
 
 require "kickplan"
 
-Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
+Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"
@@ -28,11 +28,14 @@ VCR.configure do |c|
   c.hook_into :faraday, :webmock
   c.configure_rspec_metadata!
 
-  c.filter_sensitive_data("<KICKPLAN_ENDPOINT>") {
-    ENV.fetch("KICKPLAN_ENDPOINT", "kickplan-endpoint")
-  }
+  c.before_http_request do |request|
+    uri = URI(request.uri)
+    uri.scheme = "https"
+    uri.host = "example.com"
+    request.uri = uri.to_s
+  end
 end
 
 Kickplan.configure do |config|
-  config.endpoint = ENV["KICKPLAN_ENDPOINT"]
+  config.endpoint = ENV.fetch("KICKPLAN_ENDPOINT", "https://example.com/")
 end
