@@ -1,20 +1,31 @@
 # frozen_string_literal: true
 
+begin
+  # Loading specific modules was added in 1.2
+  require "concurrent/map"
+rescue LoadError
+  require "concurrent"
+end
+
+require "forwardable"
+
 module Kickplan
+  require_relative "kickplan/client"
   require_relative "kickplan/configuration"
-  require_relative "kickplan/registry"
   require_relative "kickplan/version"
 
   extend Configuration
 
+  @_clients = Concurrent::Map.new
+
   class << self
     def client(name = :default)
-      Registry[name]
+      clients.fetch_or_store(name) { Client.new }
     end
     alias_method :[], :client
 
     def clients
-      Registry.clients
+      @_clients
     end
 
     private

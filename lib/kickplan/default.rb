@@ -11,6 +11,8 @@ module Kickplan
   require_relative "version"
 
   module Default
+    ADAPTER = :http
+
     ENDPOINT = "https://api.kickplan.io"
 
     MIDDLEWARE = Faraday::RackBuilder.new do |builder|
@@ -25,6 +27,10 @@ module Kickplan
     class << self
       def access_token
         ENV.fetch("KICKPLAN_ACCESS_TOKEN", nil)
+      end
+
+      def adapter
+        ENV.fetch("KICKPLAN_ADAPTER", ADAPTER)
       end
 
       def endpoint

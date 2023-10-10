@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module Kickplan
-  require_relative "../response"
-
   module Responses
     class Resolution < Response
       attribute :key, Types::String

@@ -7,5 +7,15 @@ module Kickplan
 
   class Response < Dry::Struct
     transform_keys(&:to_sym)
+
+    def self.new(attributes = nil, *args, **kw)
+      if attributes.is_a? Array
+        attributes.map &method(:new)
+      else
+        super
+      end
+    end
   end
+
+  require_relative "responses/resolution"
 end
