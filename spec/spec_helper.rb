@@ -35,7 +35,3 @@ VCR.configure do |c|
     request.uri = uri.to_s
   end
 end
-
-Kickplan.configure do |config|
-  config.endpoint = ENV.fetch("KICKPLAN_ENDPOINT", "https://example.com/")
-end

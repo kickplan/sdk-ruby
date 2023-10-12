@@ -11,7 +11,7 @@ module Kickplan
   require_relative "version"
 
   module Default
-    ADAPTER = :http
+    ADAPTER = :memory
 
     ENDPOINT = "https://api.kickplan.io"
 

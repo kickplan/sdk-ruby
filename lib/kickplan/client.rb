@@ -19,6 +19,10 @@ module Kickplan
       memoize { Adapter.for(config) }
     end
 
+    def reset
+      unset(:adapter)
+    end
+
     private
 
     def const_missing(name)

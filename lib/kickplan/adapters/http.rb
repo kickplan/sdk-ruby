@@ -7,6 +7,25 @@ module Kickplan
 
       delegate %i(get post put delete) => :connection
 
+      # @todo Implement adapter interface method.
+      def configure_account(params)
+        false
+      end
+
+      # @todo Implement adapter interface method.
+      def configure_feature(params)
+        false
+      end
+
+      def resolve_feature(key, params)
+        post("features/#{key}", params.to_h).body
+      end
+
+      def resolve_features(params)
+        post("features", params.to_h).body
+      end
+
+      # @api private
       def connection
         memoize do
           Faraday::Connection.new(
@@ -18,14 +37,6 @@ module Kickplan
             }
           )
         end
-      end
-
-      def resolve(key = nil, params = {})
-        if key.nil? || key.is_a?(Hash)
-          key, params = nil, key
-        end
-
-        post("features/#{key}", params).body
       end
     end
   end
