@@ -17,7 +17,7 @@ module Kickplan
 
       def resolve_feature(key, params)
         feature = features.get(key) ||
-          fail(ClientError, "Feature \"#{params.key}\" was not found")
+          fail(ClientError, "Feature \"#{key}\" was not found")
 
         account = accounts.get(params.context&.account_key)
         variant = resolve_variant(feature, account)

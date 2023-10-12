@@ -17,10 +17,10 @@ RSpec.describe Kickplan::Adapters::Memory do
 
   before { client.reset }
 
-  describe "#configure_account", :aggregate_failures do
+  describe "#configure_account" do
     let(:store) { adapter.accounts }
 
-    it "sets the configuration in the account store" do
+    it "sets the configuration in the account store", :aggregate_failures do
       expect(store).to be_empty
 
       accounts.configure("123", "chat", "false")
@@ -44,7 +44,7 @@ RSpec.describe Kickplan::Adapters::Memory do
   describe "#configure_feature" do
     let(:store) { adapter.features }
 
-    it "sets the configuration in the features store" do
+    it "sets the configuration in the features store", :aggregate_failures do
       expect(store).to be_empty
 
       features.configure("chat")
@@ -61,6 +61,58 @@ RSpec.describe Kickplan::Adapters::Memory do
     end
   end
 
-  describe "#resolve_feature", skip: true
-  describe "#resolve_features", skip: true
+  describe "#resolve_feature" do
+    before "configure feature" do
+      features.configure("seats", {
+        default: "small",
+        variants: { "small" => 10, "large" => 50 }
+      })
+    end
+
+    it "returns the default value", :aggregate_failures do
+      resolution = features.resolve("seats")
+
+      expect(resolution).to be_a Kickplan::Responses::Resolution
+      expect(resolution.key).to eq "seats"
+      expect(resolution.value).to eq 10
+    end
+
+    context "when given an account context", :aggregate_failures do
+      it "resolves using the accounts configured overrides" do
+        resolution = features.resolve("seats", context: { account_key: "123" })
+        expect(resolution.value).to eq 10
+
+        accounts.configure("123", "seats", "large")
+
+        resolution = features.resolve("seats", context: { account_key: "123" })
+        expect(resolution.value).to eq 50
+      end
+    end
+
+    context "when the feature doesn't exist" do
+      it "raises a Kickplan::ClientError" do
+        expect { features.resolve("unknown") }.
+          to raise_error(Kickplan::ClientError)
+      end
+    end
+  end
+
+  describe "#resolve_features" do
+    before "configure features" do
+      features.configure("chat")
+      features.configure("seats", {
+        default: "small",
+        variants: { "small" => 10, "large" => 50 }
+      })
+    end
+
+    it "resolves all features", :aggregate_failures do
+      resolution = features.resolve
+
+      expect(resolution).to be_a Array
+      expect(resolution).to all be_a Kickplan::Responses::Resolution
+      expect(resolution.size).to eq 2
+      expect(resolution.map(&:key)).to match_array(["chat", "seats"])
+    end
+  end
 end
