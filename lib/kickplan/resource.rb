@@ -2,6 +2,7 @@
 
 module Kickplan
   require_relative "adapter"
+  require_relative "request"
   require_relative "response"
 
   class Resource < Module
@@ -16,5 +17,6 @@ module Kickplan
     end
   end
 
+  require_relative "resources/accounts"
   require_relative "resources/features"
 end

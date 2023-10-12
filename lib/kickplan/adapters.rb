@@ -8,11 +8,11 @@ module Kickplan
 
     class << self
       def [](name)
-        registry[name.to_s]
+        registry.get(name.to_s)
       end
 
       def register(name, klass)
-        registry[name.to_s] = klass
+        registry.put(name.to_s, klass)
       end
 
       def registry
@@ -22,4 +22,5 @@ module Kickplan
   end
 
   require_relative "adapters/http"
+  require_relative "adapters/memory"
 end
