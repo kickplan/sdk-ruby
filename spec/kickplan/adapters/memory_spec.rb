@@ -64,6 +64,7 @@ RSpec.describe Kickplan::Adapters::Memory do
   describe "#resolve_feature" do
     before "configure feature" do
       features.configure("seats", {
+        name: "Seats",
         default: "small",
         variants: { "small" => 10, "large" => 50 }
       })
@@ -86,6 +87,13 @@ RSpec.describe Kickplan::Adapters::Memory do
 
         resolution = features.resolve("seats", context: { account_key: "123" })
         expect(resolution.value).to eq 50
+      end
+    end
+
+    context "when detailed response is requested" do
+      it "returns a detailed response" do
+        resolution = features.resolve("seats", detailed: true)
+        expect(resolution.metadata).to include "name" => "Seats"
       end
     end
 

@@ -22,7 +22,14 @@ module Kickplan
         account = accounts.get(params.context&.account_key)
         variant = resolve_variant(feature, account)
 
-        { key: key, value: feature.variants[variant] }
+        { key: key, value: feature.variants[variant] }.tap do |response|
+          break response unless params.detailed
+
+          response.merge!(
+            metadata: { "name" => feature.name },
+            variant: variant
+          )
+        end
       end
 
       def resolve_features(params)
