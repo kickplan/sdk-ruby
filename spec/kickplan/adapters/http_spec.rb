@@ -12,9 +12,28 @@ RSpec.describe Kickplan::Adapters::HTTP do
 
   # Test the adapter through the resource interface
   let(:accounts) { client::Accounts }
+  let(:metrics) { client::Metrics }
   let(:features) { client::Features }
 
   subject(:adapter) { client.adapter }
+
+  describe "#emit_event", vcr: { cassette_name: "metrics/set" } do
+    let(:key) { "used_seats" }
+    let(:value) { 3 }
+    let(:event) {{
+      data: { value: value },
+      subject: key,
+      type: "com.kickplan.metrics.set"
+    }}
+
+    it "creates a POST request for 'events'" do
+      expect(adapter.connection).to receive(:post).
+        with("events", hash_including(event)).
+        and_call_original
+
+      metrics.set(key, value)
+    end
+  end
 
   describe "#resolve_feature", vcr: { cassette_name: "resolve/feature" } do
     let(:key) { "digital-merch-products" }

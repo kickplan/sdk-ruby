@@ -19,4 +19,5 @@ module Kickplan
 
   require_relative "resources/accounts"
   require_relative "resources/features"
+  require_relative "resources/metrics"
 end

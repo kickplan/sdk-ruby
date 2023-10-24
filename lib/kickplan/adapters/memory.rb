@@ -15,6 +15,10 @@ module Kickplan
         true
       end
 
+      def emit_event(params)
+        true
+      end
+
       def resolve_feature(key, params)
         feature = features.get(key) ||
           fail(ClientError, "Feature \"#{key}\" was not found")

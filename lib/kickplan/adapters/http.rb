@@ -17,6 +17,11 @@ module Kickplan
         false
       end
 
+      def emit_event(params)
+        post("events", params.to_h)
+        true
+      end
+
       def resolve_feature(key, params)
         post("features/#{key}", params.to_h).body
       end
