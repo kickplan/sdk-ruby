@@ -12,6 +12,7 @@ RSpec.describe Kickplan::Adapters::HTTP do
 
   # Test the adapter through the resource interface
   let(:accounts) { client::Accounts }
+  let(:metrics) { client::Metrics }
   let(:features) { client::Features }
 
   subject(:adapter) { client.adapter }
@@ -61,6 +62,46 @@ RSpec.describe Kickplan::Adapters::HTTP do
 
       expect(response).to be_a Array
       expect(response).to all be_a Kickplan::Responses::Resolution
+    end
+  end
+
+  describe "#update_metric" do
+    let(:key) { "seats_used" }
+    let(:value) { 3 }
+    let(:context) {{ account_key: "a6a9cd9a-77af-4c1a-bc8d-4339eb00a081" }}
+    let(:params) {{ value: value, context: context }}
+
+    context "when performing a `decrement` on the metric",
+      vcr: { cassette_name: "metrics/decrement" } do
+      it "creates a POST request for 'metrics/:key/decrement'" do
+        expect(adapter.connection).to receive(:post).
+          with("metrics/#{key}/decrement", params).
+          and_call_original
+
+        metrics.decrement(key, value, context)
+      end
+    end
+
+    context "when performing a `increment` on the metric",
+      vcr: { cassette_name: "metrics/increment" } do
+      it "creates a POST request for 'metrics/:key/increment'" do
+        expect(adapter.connection).to receive(:post).
+          with("metrics/#{key}/increment", params).
+          and_call_original
+
+        metrics.increment(key, value, context)
+      end
+    end
+
+    context "when performing a `set` on the metric",
+      vcr: { cassette_name: "metrics/set" } do
+      it "creates a POST request for 'metrics/:key/set'" do
+        expect(adapter.connection).to receive(:post).
+          with("metrics/#{key}/set", params).
+          and_call_original
+
+        metrics.set(key, value, context)
+      end
     end
   end
 end

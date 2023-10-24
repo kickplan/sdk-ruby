@@ -38,6 +38,23 @@ module Kickplan
         end
       end
 
+      def update_metric(params)
+        lookup_key = [params.key, params.context.account_key].join(".")
+        current_value = metrics[lookup_key] || 0
+
+        new_value =
+          case params.action
+          when "set"
+            params.value
+          when "increment"
+            current_value + params.value
+          when "decrement"
+            current_value - params.value
+          end
+
+        metrics[lookup_key] = new_value
+      end
+
       # @api private
       def accounts
         memoize { Concurrent::Map.new }
@@ -45,6 +62,11 @@ module Kickplan
 
       # @api private
       def features
+        memoize { Concurrent::Map.new }
+      end
+
+      # @api private
+      def metrics
         memoize { Concurrent::Map.new }
       end
 
