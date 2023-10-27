@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://example.com/events
+    uri: https://example.com/api/events
     body:
       encoding: UTF-8
-      string: '{"data":{"value":3},"subject":"used_seats","type":"com.kickplan.metrics.set","id":"e64b544d-96d5-4383-a3ea-6613dafc1437","spec_version":"1.0","source":"/i/dont/know"}'
+      string: '{"data":{"value":3},"subject":"used_seats","type":"com.kickplan.metrics.set","id":"ab216847-527b-4103-96f7-0e7cac5d277f","source":"/metrics","spec_version":"1.0"}'
     headers:
       User-Agent:
       - Kickplan SDK v0.1.0
@@ -17,27 +17,25 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 404
-      message: Not Found
+      code: 202
+      message: Accepted
     headers:
       Cache-Control:
       - max-age=0, private, must-revalidate
-      Content-Type:
-      - text/html; charset=utf-8
       Date:
-      - Tue, 24 Oct 2023 00:12:51 GMT
+      - Tue, 24 Oct 2023 20:31:37 GMT
       Server:
       - Fly/55f8eaa0 (2023-10-09)
       X-Request-Id:
-      - F5Div4YNJNPET5AAA7IR
-      Transfer-Encoding:
-      - chunked
+      - F5ElQYmTBJcGNZcAAAKh
       Via:
       - 1.1 fly.io
       Fly-Request-Id:
-      - 01HDFGDVMKST6Q1X909MW02NW0-sea
+      - 01HDHP5FXEB6N178YGZHHD7VD8-sea
+      Content-Length:
+      - '0'
     body:
-      encoding: ASCII-8BIT
-      string: Not Found
-  recorded_at: Tue, 24 Oct 2023 00:12:51 GMT
+      encoding: UTF-8
+      string: ''
+  recorded_at: Tue, 24 Oct 2023 20:31:37 GMT
 recorded_with: VCR 6.2.0

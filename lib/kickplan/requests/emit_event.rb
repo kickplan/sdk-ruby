@@ -11,7 +11,7 @@ module Kickplan
 
       # Optional arguments
       attribute? :id, Types::String.default { SecureRandom.uuid }
-      attribute? :source, Types::String.default("/i/dont/know")
+      attribute? :source, Types::String.default("/events")
       attribute? :spec_version, Types::String.default("1.0")
     end
   end

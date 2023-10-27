@@ -33,6 +33,10 @@ RSpec.describe Kickplan::Adapters::HTTP do
 
       metrics.set(key, value)
     end
+
+    it "returns true" do
+      expect(metrics.set(key, value)).to eq true
+    end
   end
 
   describe "#resolve_feature", vcr: { cassette_name: "resolve/feature" } do
