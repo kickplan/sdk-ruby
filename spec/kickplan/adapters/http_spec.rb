@@ -17,28 +17,6 @@ RSpec.describe Kickplan::Adapters::HTTP do
 
   subject(:adapter) { client.adapter }
 
-  describe "#emit_event", vcr: { cassette_name: "metrics/set" } do
-    let(:key) { "used_seats" }
-    let(:value) { 3 }
-    let(:event) {{
-      data: { value: value },
-      subject: key,
-      type: "com.kickplan.metrics.set"
-    }}
-
-    it "creates a POST request for 'events'" do
-      expect(adapter.connection).to receive(:post).
-        with("events", hash_including(event)).
-        and_call_original
-
-      metrics.set(key, value)
-    end
-
-    it "returns true" do
-      expect(metrics.set(key, value)).to eq true
-    end
-  end
-
   describe "#resolve_feature", vcr: { cassette_name: "resolve/feature" } do
     let(:key) { "digital-merch-products" }
     let(:params) {{
@@ -84,6 +62,46 @@ RSpec.describe Kickplan::Adapters::HTTP do
 
       expect(response).to be_a Array
       expect(response).to all be_a Kickplan::Responses::Resolution
+    end
+  end
+
+  describe "#update_metric" do
+    let(:key) { "seats_used" }
+    let(:value) { 3 }
+    let(:context) {{ account_key: "a6a9cd9a-77af-4c1a-bc8d-4339eb00a081" }}
+    let(:params) {{ value: value, context: context }}
+
+    context "when performing a `decrement` on the metric",
+      vcr: { cassette_name: "metrics/decrement" } do
+      it "creates a POST request for 'metrics/:key/decrement'" do
+        expect(adapter.connection).to receive(:post).
+          with("metrics/#{key}/decrement", params).
+          and_call_original
+
+        metrics.decrement(key, value, context)
+      end
+    end
+
+    context "when performing a `increment` on the metric",
+      vcr: { cassette_name: "metrics/increment" } do
+      it "creates a POST request for 'metrics/:key/increment'" do
+        expect(adapter.connection).to receive(:post).
+          with("metrics/#{key}/increment", params).
+          and_call_original
+
+        metrics.increment(key, value, context)
+      end
+    end
+
+    context "when performing a `set` on the metric",
+      vcr: { cassette_name: "metrics/set" } do
+      it "creates a POST request for 'metrics/:key/set'" do
+        expect(adapter.connection).to receive(:post).
+          with("metrics/#{key}/set", params).
+          and_call_original
+
+        metrics.set(key, value, context)
+      end
     end
   end
 end

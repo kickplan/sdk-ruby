@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://example.com/api/metrics/seats_used/set
+    uri: https://example.com/api/metrics/seats_used/increment
     body:
       encoding: UTF-8
       string: '{"value":3,"context":{"account_key":"a6a9cd9a-77af-4c1a-bc8d-4339eb00a081"}}'
@@ -27,11 +27,11 @@ http_interactions:
       Server:
       - Fly/7328d5b5 (2023-10-27)
       X-Request-Id:
-      - F5L3de1GBiXO81MAAAQh
+      - F5L3de-AEwrAg0cAAAPh
       Via:
       - 1.1 fly.io
       Fly-Request-Id:
-      - 01HE0Z0QB4MCVEXBKKZWC2QFET-sea
+      - 01HE0Z0QCB2VHZZP323PYVCMKZ-sea
       Content-Length:
       - '0'
     body:

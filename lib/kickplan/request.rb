@@ -12,6 +12,6 @@ module Kickplan
 
   require_relative "requests/configure_account"
   require_relative "requests/configure_feature"
-  require_relative "requests/emit_event"
   require_relative "requests/resolve_feature"
+  require_relative "requests/update_metric"
 end

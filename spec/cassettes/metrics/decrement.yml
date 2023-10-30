@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://example.com/api/metrics/seats_used/set
+    uri: https://example.com/api/metrics/seats_used/decrement
     body:
       encoding: UTF-8
       string: '{"value":3,"context":{"account_key":"a6a9cd9a-77af-4c1a-bc8d-4339eb00a081"}}'
@@ -23,19 +23,19 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       Date:
-      - Mon, 30 Oct 2023 18:54:54 GMT
+      - Mon, 30 Oct 2023 18:53:24 GMT
       Server:
       - Fly/7328d5b5 (2023-10-27)
       X-Request-Id:
-      - F5L3de1GBiXO81MAAAQh
+      - F5L3YMrMmnvDm0UAAAOR
       Via:
       - 1.1 fly.io
       Fly-Request-Id:
-      - 01HE0Z0QB4MCVEXBKKZWC2QFET-sea
+      - 01HE0YXYPHWBEZEFT521MGQDYS-sea
       Content-Length:
       - '0'
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Mon, 30 Oct 2023 18:54:55 GMT
+  recorded_at: Mon, 30 Oct 2023 18:53:24 GMT
 recorded_with: VCR 6.2.0

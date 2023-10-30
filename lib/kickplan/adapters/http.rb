@@ -17,17 +17,18 @@ module Kickplan
         false
       end
 
-      def emit_event(params)
-        post("events", params.to_h)
-        true
-      end
-
       def resolve_feature(key, params)
         post("features/#{key}", params.to_h).body
       end
 
       def resolve_features(params)
         post("features", params.to_h).body
+      end
+
+      def update_metric(params)
+        path = ["metrics", params.key, params.action].join("/")
+
+        post(path, params.to_h.slice(:value, :context)).body
       end
 
       # @api private
