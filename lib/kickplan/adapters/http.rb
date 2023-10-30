@@ -25,6 +25,12 @@ module Kickplan
         post("features", params.to_h).body
       end
 
+      def update_metric(params)
+        path = ["metrics", params.key, params.action].join("/")
+
+        post(path, params.to_h.slice(:value, :context)).body
+      end
+
       # @api private
       def connection
         memoize do
