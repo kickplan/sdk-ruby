@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Kickplan::Adapters::HTTP do
   Kickplan[:http].configure do |config|
     config.adapter = :http
-    config.endpoint = ENV.fetch("KICKPLAN_ENDPOINT", "https://example.com/")
+    config.endpoint = ENV.fetch("KICKPLAN_ENDPOINT", "https://example.com/api")
   end
 
   let(:client) { Kickplan.client(:http) }
