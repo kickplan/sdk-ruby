@@ -104,7 +104,8 @@ multiple clients in your application to access multiple endpoints or utilize dif
 adapters.
 
 Clients are referenced by an arbitrary name via `Kickplan.[]` or `Kickplan.client()`. Once referenced,
-is instantiated and stored internally in a [thread-safe registry](https://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Map.html).
+the client is instantiated and stored internally in a
+[thread-safe registry](https://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Map.html).
 
 The default client is registered with the name `:default`.
 
