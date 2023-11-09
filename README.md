@@ -2,7 +2,7 @@
 
 ## Configuration
 
-Config options can be found in the [`Configuration`](/blob/main/lib/kickplan/configuration.rb) module.
+Config options can be found in the [`Configuration`](/lib/kickplan/configuration.rb) module.
 
 ```ruby
 Kickplan.configure do |config|
@@ -11,7 +11,7 @@ Kickplan.configure do |config|
 end
 ```
 
-Additionally, the SDK can read from ENV variables and has a set of reasonable [defaults](/blob/main/lib/kickplan/default.rb).
+Additionally, the SDK can read from ENV variables and has a set of reasonable [defaults](/lib/kickplan/default.rb).
 
 ## Adapters
 
@@ -34,8 +34,8 @@ end
 
 ## Resources
 
-All API methods are accessed via various the [`Resource`](/blob/main/lib/kickplan/resources) modules. Each
-resource endpoint will generally have a corresponding [`Request`](/blob/main/lib/kickplan/requests) module
+All API methods are accessed via various the [`Resource`](/lib/kickplan/resources) modules. Each
+resource endpoint will generally have a corresponding [`Request`](/lib/kickplan/requests) module
 that is configured to validate input.
 
 ### Accounts
@@ -62,7 +62,7 @@ Kickplan::Features.configure("seats", {
 })
 ```
 
-See [`Requests::ConfigureFeature`](/blob/main/lib/kickplan/requests/configure_feature.rb) for a list parameters.
+See [`Requests::ConfigureFeature`](/lib/kickplan/requests/configure_feature.rb) for a list parameters.
 
 #### `resolve`
 
@@ -91,7 +91,7 @@ Kickplan::Features.resolve
  #<Kickplan::Responses::Resolution key="seats" value=false ...>]
 ```
 
-See [`Requests::ResolveFeature`](/blob/main/lib/kickplan/requests/resolve_feature.rb) for a list parameters.
+See [`Requests::ResolveFeature`](/lib/kickplan/requests/resolve_feature.rb) for a list parameters.
 
 ### Metrics
 
