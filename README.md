@@ -13,28 +13,9 @@ end
 
 Additionally, the SDK can read from ENV variables and has a set of reasonable [defaults](/lib/kickplan/default.rb).
 
-## Adapters
-
-The SDK currently supports 2 adapters: `:memory` and `:http`. Additional built-in adapters are planned.
-
-The `:memory` adapter can be used for testing purposes or as a fully in-memory feature resolution tool.
-
-You can also create and register your own adapter:
-
-```ruby
-Kickplan::Adapters.register(:custom_adapter, CustomAdapter)
-
-Kickplan.configure do |config|
-  config.adapter = :custom_adapter
-end
-```
-
-@todo info on the Interface required for implementing a custom adapter.
-@todo should this section go lower in the README?
-
 ## Resources
 
-All API methods are accessed via various the [`Resource`](/lib/kickplan/resources) modules. Each
+All API methods are accessed via the various [`Resource`](/lib/kickplan/resources) modules. Each
 resource endpoint will generally have a corresponding [`Request`](/lib/kickplan/requests) module
 that is configured to validate input.
 
@@ -96,6 +77,24 @@ See [`Requests::ResolveFeature`](/lib/kickplan/requests/resolve_feature.rb) for 
 ### Metrics
 
 @todo
+
+## Adapters
+
+The SDK currently supports 2 adapters: `:memory` and `:http`. Additional built-in adapters are planned.
+
+The `:memory` adapter can be used for testing purposes or as a fully in-memory feature resolution tool.
+
+You can also create and register your own adapter:
+
+```ruby
+Kickplan::Adapters.register(:custom_adapter, CustomAdapter)
+
+Kickplan.configure do |config|
+  config.adapter = :custom_adapter
+end
+```
+
+@todo info on the Interface required for implementing a custom adapter.
 
 ## Additional Clients
 
@@ -166,6 +165,6 @@ Resources on custom clients are referenced with the same syntax as the default c
 # Default client
 Kickplan::Feature.configure(...)
 
-# Custom client
+# Additional client
 Kickplan[:foobar]::Features.configure(...)
 ```
