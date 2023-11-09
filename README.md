@@ -130,8 +130,9 @@ Kickplan[:foobar].object_id == Kickplan[:foobar].object
 
 ### Configuration
 
-The Kickplan SDK can be configured globally or on a per-client level. When instantiating,
-clients will default to the global configuration but can customized afterwards:
+The Kickplan SDK can be configured globally or on a per-client level. By default,
+all clients will utilize the global configuration but you can also configure the client
+directly:
 
 ```ruby
 # Global configuration
@@ -145,7 +146,7 @@ Kickplan.client.config.access_token
 Kickplan[:foobar].config.access_token
 => "1234"
 
-# Per-client configuration
+# Client configuration
 Kickplan[:foobar].configure do |config|
   config.access_token = "4321"
 end
@@ -163,8 +164,8 @@ Resources on custom clients are referenced with the same syntax as the default c
 
 ```ruby
 # Default client
-Kickplan::Feature.configure(...)
+Kickplan::Features.resolve(...)
 
-# Additional client
-Kickplan[:foobar]::Features.configure(...)
+# Custom client
+Kickplan[:foobar]::Features.resolve(...)
 ```
