@@ -17,17 +17,17 @@ RSpec.describe Kickplan::Adapters::HTTP do
 
   subject(:adapter) { client.adapter }
 
-  describe "#resolve_feature", vcr: { cassette_name: "resolve/feature" } do
-    let(:key) { "digital-merch-products" }
+  describe "#resolve_feature", vcr: { cassette_name: "features/resolve" } do
+    let(:key) { "seats" }
     let(:params) {{
       context: {
-        account_key: "a6a9cd9a-77af-4c1a-bc8d-4339eb00a081"
+        account_key: "9a592f57-6da0-408e-99e7-8918b48a7dbe"
       }
     }}
 
     it "creates a POST request for 'features/:key'" do
       expect(adapter.connection).to receive(:post).
-        with("features/#{key}", hash_including(params)).
+        with("features/#{key}/resolve", hash_including(params)).
         and_call_original
 
       features.resolve(key, params)
@@ -42,16 +42,16 @@ RSpec.describe Kickplan::Adapters::HTTP do
     end
   end
 
-  describe "#resolve_features", vcr: { cassette_name: "resolve/features" } do
+  describe "#resolve_features", vcr: { cassette_name: "features/resolve-all" } do
     let(:params) {{
       context: {
-        account_key: "a6a9cd9a-77af-4c1a-bc8d-4339eb00a081"
+        account_key: "9a592f57-6da0-408e-99e7-8918b48a7dbe"
       }
     }}
 
     it "creates a POST request for 'features'" do
       expect(adapter.connection).to receive(:post).
-        with("features", hash_including(params)).
+        with("features/resolve", hash_including(params)).
         and_call_original
 
       features.resolve(params)
@@ -68,7 +68,7 @@ RSpec.describe Kickplan::Adapters::HTTP do
   describe "#update_metric" do
     let(:key) { "seats_used" }
     let(:value) { 3 }
-    let(:context) {{ account_key: "a6a9cd9a-77af-4c1a-bc8d-4339eb00a081" }}
+    let(:context) {{ account_key: "9a592f57-6da0-408e-99e7-8918b48a7dbe" }}
     let(:params) {{ value: value, context: context }}
 
     context "when performing a `decrement` on the metric",
