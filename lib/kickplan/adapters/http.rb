@@ -18,11 +18,11 @@ module Kickplan
       end
 
       def resolve_feature(key, params)
-        post("features/#{key}", params.to_h).body
+        post("features/#{key}/resolve", params.to_h).body
       end
 
       def resolve_features(params)
-        post("features", params.to_h).body
+        post("features/resolve", params.to_h).body
       end
 
       def update_metric(params)

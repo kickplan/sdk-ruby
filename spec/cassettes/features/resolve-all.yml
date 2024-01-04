@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: "https://example.com/api/features/digital-merch-products"
+    uri: https://example.com/api/features/resolve
     body:
       encoding: UTF-8
-      string: '{"context":{"account_id":"a6a9cd9a-77af-4c1a-bc8d-4339eb00a081"}}'
+      string: '{"detailed":false,"context":{"account_key":"9a592f57-6da0-408e-99e7-8918b48a7dbe"}}'
     headers:
       User-Agent:
       - Kickplan SDK v0.1.0
@@ -25,19 +25,20 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Fri, 22 Sep 2023 03:35:15 GMT
+      - Thu, 04 Jan 2024 20:07:25 GMT
       Server:
-      - Fly/e440b950 (2023-09-20)
+      - Fly/ec8196c09 (2024-01-02)
       X-Request-Id:
-      - F4cbOOfQzypf9eYAAALB
+      - F6c9uDzdF1g4IT8AAAEx
       Transfer-Encoding:
       - chunked
       Via:
       - 1.1 fly.io
       Fly-Request-Id:
-      - 01HAXF9F7A6G5M5FEB2FPKWJ1Z-sea
+      - 01HKB1CXHAHE3EHV9R5X5MFWNQ-sea
     body:
       encoding: ASCII-8BIT
-      string: '{"key":"digital-merch-products","value":true}'
-  recorded_at: Fri, 22 Sep 2023 03:35:15 GMT
+      string: '[{"key":"features","value":true},{"key":"override","value":"Overrides
+        Off"},{"key":"metrics","value":true},{"key":"seats","value":99999},{"key":"plan","value":false}]'
+  recorded_at: Thu, 04 Jan 2024 20:07:25 GMT
 recorded_with: VCR 6.2.0
