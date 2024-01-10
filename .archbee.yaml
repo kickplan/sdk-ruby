@@ -2,3 +2,6 @@ root: doc
 structure:
   summary: summary.md
   assets: assets
+  readme: README.md
+  shadowDocs:
+  - "*"
