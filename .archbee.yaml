@@ -1,0 +1,4 @@
+root: doc
+structure:
+  summary: summary.md
+  assets: assets
