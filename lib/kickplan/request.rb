@@ -10,8 +10,12 @@ module Kickplan
     schema schema.strict
   end
 
-  require_relative "requests/configure_account"
-  require_relative "requests/configure_feature"
-  require_relative "requests/resolve_feature"
-  require_relative "requests/update_metric"
+  require_relative "requests/accounts/create"
+  require_relative "requests/accounts/update"
+  require_relative "requests/features/resolve"
+  require_relative "requests/metrics/update"
+
+  # Deprecated
+  require_relative "requests/accounts/configure"
+  require_relative "requests/features/configure"
 end

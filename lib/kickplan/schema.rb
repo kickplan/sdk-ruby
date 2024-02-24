@@ -5,17 +5,21 @@ require "dry-struct"
 module Kickplan
   require_relative "types"
 
-  class Response < Dry::Struct
+  class Schema < Dry::Struct
     transform_keys(&:to_sym)
 
     def self.wrap(attributes = {})
-      if attributes.is_a? Hash
+      case attributes
+      when Hash
         new(attributes)
-      else
+      when Enumerable
         Array(attributes).map &method(:new)
+      else
+        attributes
       end
     end
   end
 
-  require_relative "responses/resolution"
+  require_relative "schemas/account"
+  require_relative "schemas/resolution"
 end

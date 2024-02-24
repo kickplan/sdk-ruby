@@ -3,9 +3,9 @@
 module Kickplan
   module Resources
     class Features < Resource
+      # @deprecated
       def configure(key, options = {})
-        params = Requests::ConfigureFeature.new(options.merge(key: key))
-
+        params = Requests::Features::Configure.new(options.merge(key: key))
         adapter.configure_feature(params)
       end
 
@@ -14,7 +14,7 @@ module Kickplan
           key, options = nil, key
         end
 
-        params = Requests::ResolveFeature.new(options)
+        params = Requests::Features::Resolve.new(options)
 
         response =
           if key.nil?
@@ -23,7 +23,7 @@ module Kickplan
             adapter.resolve_feature(key, params)
           end
 
-        Responses::Resolution.wrap(response)
+        Schemas::Resolution.wrap(response)
       end
     end
   end

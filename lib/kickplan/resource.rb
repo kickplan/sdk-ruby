@@ -3,7 +3,7 @@
 module Kickplan
   require_relative "adapter"
   require_relative "request"
-  require_relative "response"
+  require_relative "schema"
 
   class Resource < Module
     extend Forwardable
