@@ -49,25 +49,25 @@ To resolve a single feature:
 
 ```ruby
 Kickplan::Features.resolve("chat")
-=> #<Kickplan::Responses::Resolution key="chat" value=false ...>
+=> #<Kickplan::Schemas::Resolution key="chat" value=false ...>
 
 # Resolve with context
 Kickplan::Features.resolve("chat", {
   context: { account_id: "..." }
 })
-=> #<Kickplan::Responses::Resolution key="chat" value=false ...>
+=> #<Kickplan::Schemas::Resolution key="chat" value=false ...>
 
 # Detailed response
 Kickplan::Features.resolve("chat", detailed: true)
-=> #<Kickplan::Responses::Resolution key="chat" value=false metadata={...} ...>
+=> #<Kickplan::Schemas::Resolution key="chat" value=false metadata={...} ...>
 ```
 
 To resolve all features, you can use the same method without a feature key:
 
 ```ruby
 Kickplan::Features.resolve
-=> [#<Kickplan::Responses::Resolution key="chat" value=false ...>,
- #<Kickplan::Responses::Resolution key="seats" value=false ...>]
+=> [#<Kickplan::Schemas::Resolution key="chat" value=false ...>,
+ #<Kickplan::Schemas::Resolution key="seats" value=false ...>]
 ```
 
 See [`Requests::ResolveFeature`](/lib/kickplan/requests/resolve_feature.rb) for a list parameters.

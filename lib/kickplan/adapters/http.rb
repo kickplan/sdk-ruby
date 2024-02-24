@@ -7,14 +7,20 @@ module Kickplan
 
       delegate %i(get post put delete) => :connection
 
-      # @todo Implement adapter interface method.
+      # @deprecated
       def configure_account(params)
-        false
+        raise NotImplementedError,
+          "#add_account_override is not defined for #{self.class}"
+      end
+
+      def create_account(params)
+        post("accounts", params.to_h).body
       end
 
       # @todo Implement adapter interface method.
       def configure_feature(params)
-        false
+        raise NotImplementedError,
+          "#configure_feature is not defined for #{self.class}"
       end
 
       def resolve_feature(key, params)
@@ -23,6 +29,10 @@ module Kickplan
 
       def resolve_features(params)
         post("features/resolve", params.to_h).body
+      end
+
+      def update_account(key, params)
+        put("accounts/#{key}", params.to_h).body
       end
 
       def update_metric(params)
