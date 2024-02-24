@@ -3,11 +3,23 @@
 module Kickplan
   module Adapters
     class Memory < Adapter
+      def create_account(params)
+        accounts.compute(params.key) do |existing|
+          unless existing.nil?
+            fail(Errors::BadRequest, "Account \"#{params.key}\" already exists")
+          end
+
+          # @todo Add support for all fields
+          fields = params.to_h.slice(:key, :name)
+          Schemas::Account.new(fields)
+        end
+      end
+
+      # @deprecated
       def configure_account(params)
-        accounts.merge_pair(params.key, params) do |existing|
+        overrides.merge_pair(params.key, params) do |existing|
           existing.merge(params)
         end
-        true
       end
 
       def configure_feature(params)
@@ -19,7 +31,7 @@ module Kickplan
         feature = features.get(key) ||
           fail(ClientError, "Feature \"#{key}\" was not found")
 
-        account = accounts.get(params.context&.account_key)
+        account = overrides.get(params.context&.account_key)
         variant = resolve_variant(feature, account)
 
         { key: key, value: feature.variants[variant] }.tap do |response|
@@ -35,6 +47,18 @@ module Kickplan
       def resolve_features(params)
         features.keys.map do |key|
           resolve_feature(key, params)
+        end
+      end
+
+      def update_account(key, params)
+        accounts.compute(key) do |existing|
+          if existing.nil?
+            fail(Errors::NotFound, "Account \"#{key}\" not found")
+          end
+
+          # @todo Add support for all fields
+          fields = params.to_h.slice(:name).merge(key: key)
+          Schemas::Account.new(fields)
         end
       end
 
@@ -67,6 +91,12 @@ module Kickplan
 
       # @api private
       def metrics
+        memoize { Concurrent::Map.new }
+      end
+
+      # @api private
+      # @deprecated
+      def overrides
         memoize { Concurrent::Map.new }
       end
 

@@ -18,8 +18,30 @@ RSpec.describe Kickplan::Adapters::Memory do
 
   before { client.reset }
 
-  describe "#configure_account" do
+  describe "#create_account" do
     let(:store) { adapter.accounts }
+
+    it "stores the account in the account store", :aggregate_failures do
+      expect(store).to be_empty
+
+      accounts.create(key: "acme", name: "Acme Inc")
+      expect(store).to_not be_empty
+      expect(store["acme"]).to be_a Kickplan::Schemas::Account
+      expect(store["acme"].name).to eq "Acme Inc"
+    end
+
+    context "when the account already exists" do
+      it "raises a BadRequest error" do
+        accounts.create(key: "acme")
+
+        expect { accounts.create(key: "acme") }.
+          to raise_error(Kickplan::Errors::BadRequest)
+      end
+    end
+  end
+
+  describe "#configure_account" do
+    let(:store) { adapter.overrides }
 
     it "sets the configuration in the account store", :aggregate_failures do
       expect(store).to be_empty
@@ -35,10 +57,6 @@ RSpec.describe Kickplan::Adapters::Memory do
       accounts.configure("123", "geoblocking", "true")
       expect(store["123"].overrides).to include("geoblocking" => "true")
       expect(store["123"].overrides.size).to eq 2
-    end
-
-    it "returns true" do
-      expect(accounts.configure("123", "chat", "false")).to eq true
     end
   end
 
@@ -62,6 +80,31 @@ RSpec.describe Kickplan::Adapters::Memory do
     end
   end
 
+  describe "#create_account" do
+    let(:store) { adapter.accounts }
+    let(:params) {{ key: "acme", name: "Acme Inc." }}
+
+    it "stores a new account", :aggregate_failures do
+      expect(store).to be_empty
+
+      response = accounts.create(params)
+
+      expect(response).to be_a Kickplan::Schemas::Account
+      expect(response.key).to eq "acme"
+      expect(response.name).to eq "Acme Inc."
+      expect(store["acme"]).to be response
+    end
+
+    context "when an account already exists" do
+      it "raises a BadRequest error" do
+        accounts.create(params)
+
+        expect { accounts.create(params) }.
+          to raise_error(Kickplan::Errors::BadRequest)
+      end
+    end
+  end
+
   describe "#resolve_feature" do
     before "configure feature" do
       features.configure("seats", {
@@ -74,7 +117,7 @@ RSpec.describe Kickplan::Adapters::Memory do
     it "returns the default value", :aggregate_failures do
       resolution = features.resolve("seats")
 
-      expect(resolution).to be_a Kickplan::Responses::Resolution
+      expect(resolution).to be_a Kickplan::Schemas::Resolution
       expect(resolution.key).to eq "seats"
       expect(resolution.value).to eq 10
     end
@@ -119,9 +162,33 @@ RSpec.describe Kickplan::Adapters::Memory do
       resolution = features.resolve
 
       expect(resolution).to be_a Array
-      expect(resolution).to all be_a Kickplan::Responses::Resolution
+      expect(resolution).to all be_a Kickplan::Schemas::Resolution
       expect(resolution.size).to eq 2
       expect(resolution.map(&:key)).to match_array(["chat", "seats"])
+    end
+  end
+
+  describe "#update_account" do
+    let(:store) { adapter.accounts }
+    let(:key) { "acme" }
+    let(:params) {{ name: "Acme Inc." }}
+
+    it "updates an account in the account store", :aggregate_failures do
+      accounts.create(key: key, name: "Old Name")
+
+      response = accounts.update(key, params)
+
+      expect(response).to be_a Kickplan::Schemas::Account
+      expect(response.key).to eq "acme"
+      expect(response.name).to eq "Acme Inc."
+      expect(store["acme"]).to be response
+    end
+
+    context "when the account doesn't exist" do
+      it "raises a NotFound error" do
+        expect { accounts.update(key, params) }.
+          to raise_error(Kickplan::Errors::NotFound)
+      end
     end
   end
 

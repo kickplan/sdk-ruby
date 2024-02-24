@@ -20,7 +20,7 @@ module Kickplan
           value, context = 1, value
         end
 
-        params = Requests::UpdateMetric.new(
+        params = Requests::Metrics::Update.new(
           action: action,
           context: context,
           key: key,

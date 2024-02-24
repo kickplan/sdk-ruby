@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://example.com/api/accounts/acme
+    body:
+      encoding: UTF-8
+      string: '{"name":"Acme Inc.","custom_fields":{"salesforce-id":"4321"},"account_plans":[{"plan_key":"large"}],"feature_overrides":[{"override":"variant_key","feature_key":"metrics","variant_key":"false"}]}'
+    headers:
+      User-Agent:
+      - Kickplan SDK v0.1.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 22 Feb 2024 20:13:06 GMT
+      Server:
+      - Fly/17d0263d (2024-02-15)
+      X-Request-Id:
+      - F7ZId48CSOea9CUAAAGB
+      Transfer-Encoding:
+      - chunked
+      Via:
+      - 1.1 fly.io
+      Fly-Request-Id:
+      - 01HQ976J0QMZMXMS6DMNZ9KETD-sea
+    body:
+      encoding: ASCII-8BIT
+      string: '{"feature_overrides":["metrics/false"],"inserted_at":"2024-02-22T20:07:44.706979Z","key":"acme","name":"Acme
+        Inc.","plans":["large"],"updated_at":"2024-02-22T20:13:06.995778Z"}'
+  recorded_at: Thu, 22 Feb 2024 20:13:07 GMT
+recorded_with: VCR 6.2.0

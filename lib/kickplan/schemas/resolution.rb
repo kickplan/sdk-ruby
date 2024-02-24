@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Kickplan
-  module Responses
-    class Resolution < Response
+  module Schemas
+    class Resolution < Schema
       attribute :key, Types::String
       attribute :value, Types::Any
 
