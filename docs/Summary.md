@@ -1,7 +1,7 @@
-# Table Of Contents
-Introduction
+## Table Of Contents
+- [Introduction](Introduction.md)
 
-# Integration Guide
+## Integration Guide
 * Feature Flagging   
 * Metrics    
 * Account Creation    
