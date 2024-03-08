@@ -168,6 +168,26 @@ RSpec.describe Kickplan::Adapters::Memory do
     end
   end
 
+  describe "#set_metric" do
+    let(:store) { adapter.metrics }
+
+    let(:key) { "seats_used" }
+    let(:value) { 10 }
+    let(:account_key) { "a6a9cd9a-77af-4c1a-bc8d-4339eb00a081" }
+    let(:store_key) { [key, account_key].join(".") }
+
+    it "sets the value in the metrics store", :aggregate_failures do
+      expect(store).to be_empty
+
+      metrics.set(key: key, value: value, account_key: account_key)
+      expect(store).to_not be_empty
+      expect(store[store_key]).to eq value
+
+      metrics.set(key: key, value: 3, account_key: account_key)
+      expect(store[store_key]).to eq 3
+    end
+  end
+
   describe "#update_account" do
     let(:store) { adapter.accounts }
     let(:key) { "acme" }
@@ -188,53 +208,6 @@ RSpec.describe Kickplan::Adapters::Memory do
       it "raises a NotFound error" do
         expect { accounts.update(key, params) }.
           to raise_error(Kickplan::Errors::NotFound)
-      end
-    end
-  end
-
-  describe "#update_metric" do
-    let(:store) { adapter.metrics }
-
-    let(:key) { "seats_used" }
-    let(:account_key) { "a6a9cd9a-77af-4c1a-bc8d-4339eb00a081" }
-    let(:store_key) { [key, account_key].join(".") }
-
-    context "when performing a `decrement` on the metric" do
-      it "decrements the value in the metrics store", :aggregate_failures do
-        expect(store).to be_empty
-
-        metrics.decrement(key, account_key: account_key)
-        expect(store).to_not be_empty
-        expect(store[store_key]).to eq -1
-
-        metrics.decrement(key, 3, account_key: account_key)
-        expect(store[store_key]).to eq -4
-      end
-    end
-
-    context "when performing a `increment` on the metric" do
-      it "increments the value in the metrics store", :aggregate_failures do
-        expect(store).to be_empty
-
-        metrics.increment(key, account_key: account_key)
-        expect(store).to_not be_empty
-        expect(store[store_key]).to eq 1
-
-        metrics.increment(key, 3, account_key: account_key)
-        expect(store[store_key]).to eq 4
-      end
-    end
-
-    context "when performing a `set` on the metric" do
-      it "sets the value in the metrics store", :aggregate_failures do
-        expect(store).to be_empty
-
-        metrics.set(key, account_key: account_key)
-        expect(store).to_not be_empty
-        expect(store[store_key]).to eq 1
-
-        metrics.set(key, 3, account_key: account_key)
-        expect(store[store_key]).to eq 3
       end
     end
   end
