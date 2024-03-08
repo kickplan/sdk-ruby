@@ -50,6 +50,11 @@ module Kickplan
         end
       end
 
+      def set_metric(params)
+        metrics["#{params.key}.#{params.account_key}"] = params.value
+        true
+      end
+
       def update_account(key, params)
         accounts.compute(key) do |existing|
           if existing.nil?
@@ -60,23 +65,6 @@ module Kickplan
           fields = params.to_h.slice(:name).merge(key: key)
           Schemas::Account.new(fields)
         end
-      end
-
-      def update_metric(params)
-        lookup_key = [params.key, params.context.account_key].join(".")
-        current_value = metrics[lookup_key] || 0
-
-        new_value =
-          case params.action
-          when "set"
-            params.value
-          when "increment"
-            current_value + params.value
-          when "decrement"
-            current_value - params.value
-          end
-
-        metrics[lookup_key] = new_value
       end
 
       # @api private

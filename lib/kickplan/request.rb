@@ -13,7 +13,7 @@ module Kickplan
   require_relative "requests/accounts/create"
   require_relative "requests/accounts/update"
   require_relative "requests/features/resolve"
-  require_relative "requests/metrics/update"
+  require_relative "requests/metrics/set"
 
   # Deprecated
   require_relative "requests/accounts/configure"

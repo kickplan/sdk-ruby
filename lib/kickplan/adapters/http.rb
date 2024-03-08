@@ -31,14 +31,12 @@ module Kickplan
         post("features/resolve", params.to_h).body
       end
 
-      def update_account(key, params)
-        put("accounts/#{key}", params.to_h).body
+      def set_metric(params)
+        post("metrics/set", params.to_h).success?
       end
 
-      def update_metric(params)
-        path = ["metrics", params.key, params.action].join("/")
-
-        post(path, params.to_h.slice(:value, :context)).body
+      def update_account(key, params)
+        put("accounts/#{key}", params.to_h).body
       end
 
       # @api private
