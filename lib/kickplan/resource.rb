@@ -15,6 +15,11 @@ module Kickplan
     def initialize(client)
       @client = client
     end
+
+    def inspect
+      "#{client.inspect}::#{self.class.name.split("::").last}"
+    end
+    alias_method :to_s, :inspect
   end
 
   require_relative "resources/accounts"

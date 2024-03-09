@@ -10,7 +10,11 @@ module Kickplan
     include Concurrency
     include Configuration
 
-    def initialize
+    attr_reader :name
+
+    def initialize(name)
+      @name = name.to_s
+
       # Use global configuration as client defaults
       config.update(Kickplan.config.values)
     end
@@ -18,6 +22,11 @@ module Kickplan
     def adapter
       memoize { Adapter.for(config) }
     end
+
+    def inspect
+      "#<#{self.class.name}(#{name})>"
+    end
+    alias_method :to_s, :inspect
 
     def reset
       unset(:adapter)
