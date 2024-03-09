@@ -31,7 +31,7 @@ module Kickplan
     private
 
     def const_missing(name)
-      client.const_get(name)
+      client.const_get(name, false)
     end
   end
 end
