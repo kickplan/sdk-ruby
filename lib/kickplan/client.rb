@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+module Features
+end
+
 module Kickplan
   require_relative "adapters"
   require_relative "concurrency"
@@ -36,7 +39,7 @@ module Kickplan
 
     def const_missing(name)
       synchronize do
-        Resources.const_get(name).new(self).tap do |resource|
+        Resources.const_get(name, false).new(self).tap do |resource|
           self.const_set(name, resource)
         end
       end
