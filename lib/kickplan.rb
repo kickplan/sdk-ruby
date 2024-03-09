@@ -20,7 +20,7 @@ module Kickplan
 
   class << self
     def client(name = :default)
-      clients.fetch_or_store(name) { Client.new }
+      clients.fetch_or_store(name.to_s) { Client.new(name) }
     end
     alias_method :[], :client
 

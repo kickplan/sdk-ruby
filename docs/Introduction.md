@@ -1,80 +1,102 @@
 ## Configuration
 
-Config options can be found in the [`Configuration`](/lib/kickplan/configuration.rb) module.
+Config options can be found in the [`Configuration`](https://github.com/kickplan/sdk-ruby/blob/main/lib/kickplan/configuration.rb) module.
 
 ```ruby
+require "kickplan"
+
 Kickplan.configure do |config|
-  config.access_token = "..."
   config.adapter = :http
+  config.endpoint = "https://demo-control.kickplan.com"
 end
 ```
 
-Additionally, the SDK can read from ENV variables and has a set of reasonable [defaults](/lib/kickplan/default.rb).
+Additionally, the SDK can read from ENV variables and has a set of reasonable [defaults](https://github.com/kickplan/sdk-ruby/blob/main/lib/kickplan/default.rb).
 
 ## Resources
 
-All API methods are accessed via the various [`Resource`](/lib/kickplan/resources) modules. Each
-resource endpoint will generally have a corresponding [`Request`](/lib/kickplan/requests) module
-that is configured to validate input.
+All API methods are accessed via the various [`Resource`](https://github.com/kickplan/sdk-ruby/blob/main/lib/kickplan/resources) modules.
+
+Each resource endpoint will generally have a corresponding [`Request`](https://github.com/kickplan/sdk-ruby/blob/main/lib/kickplan/requests) module
+that is configured to validate input client-side.
 
 ### Accounts
 
-@todo
+**`#create`**
 
-### Features
-
-@todo introduce what a feature is, `key`, defaults, etc.
-
-#### `configure`
-
-To configure a new feature:
+Creates a new account record:
 
 ```ruby
-# Configure feature with defaults
-Kickplan::Features.configure("chat")
+Kickplan::Accounts.create(
+  key: "acme",
+  name: "Acme",
+  account_plans: [{ plan_key: "essentials" }]
+)
+```
 
-# Fully customize feature
-Kickplan::Features.configure("seats", {
-  name: "Seats",
-  default: "small",
-  variants: { "small" => 10, "large" => 50 }
+See [`Requests::Accounts::Create`](https://github.com/kickplan/sdk-ruby/blob/main/lib/kickplan/requests/accounts/create.rb) for parameters.
+
+**`#update`**
+
+Updates an existing account record:
+
+```ruby
+Kickplan::Accounts.update("acme", {
+  name: "Acme Inc.",
+  account_plans: [{ plan_key: "professional" }]
 })
 ```
 
-See [`Requests::ConfigureFeature`](/lib/kickplan/requests/configure_feature.rb) for a list parameters.
+See [`Requests::Accounts::Update`](https://github.com/kickplan/sdk-ruby/blob/main/lib/kickplan/requests/accounts/update.rb) for parameters.
 
-#### `resolve`
+### Features
 
-To resolve a single feature:
+**`#resolve`**
+
+To resolve a single feature, pass the feature key as the first argument:
 
 ```ruby
 Kickplan::Features.resolve("chat")
 => #<Kickplan::Schemas::Resolution key="chat" value=false ...>
 
-# Resolve with context
+# Resolve for an account
 Kickplan::Features.resolve("chat", {
-  context: { account_id: "..." }
+  context: { account_key: "acme" }
 })
-=> #<Kickplan::Schemas::Resolution key="chat" value=false ...>
+=> #<Kickplan::Schemas::Resolution key="chat" value=true ...>
 
 # Detailed response
 Kickplan::Features.resolve("chat", detailed: true)
 => #<Kickplan::Schemas::Resolution key="chat" value=false metadata={...} ...>
 ```
 
-To resolve all features, you can use the same method without a feature key:
+To resolve all features, omit the feature key:
 
 ```ruby
-Kickplan::Features.resolve
+Kickplan::Features.resolve()
 => [#<Kickplan::Schemas::Resolution key="chat" value=false ...>,
+ #<Kickplan::Schemas::Resolution key="seats" value=false ...>]
+
+# Resolve for an account
+Kickplan::Features.resolve(context: { account_key: "acme" })
+=> [#<Kickplan::Schemas::Resolution key="chat" value=true ...>,
  #<Kickplan::Schemas::Resolution key="seats" value=false ...>]
 ```
 
-See [`Requests::ResolveFeature`](/lib/kickplan/requests/resolve_feature.rb) for a list parameters.
+See [`Requests::Features::Resolve`](https://github.com/kickplan/sdk-ruby/blob/main/lib/kickplan/requests/features/resolve.rb) for parameters.
 
 ### Metrics
 
-@todo
+**`#set`**
+
+Sets a metric to a specific value:
+
+```ruby
+Kickplan::Metrics.set(key: "seats", value: "5", account_key: "acme")
+=> true
+```
+
+See [`Requests::Metrics::Set`](https://github.com/kickplan/sdk-ruby/blob/main/lib/kickplan/requests/metrics/set.rb) for parameters.
 
 ## Adapters
 
@@ -92,38 +114,51 @@ Kickplan.configure do |config|
 end
 ```
 
-@todo info on the Interface required for implementing a custom adapter.
+@todo Add info on the interface required for implementing a custom adapter.
 
 ## Additional Clients
 
-Kickplan uses a single `Kickplan::Client` instance by default. However, you may need
-multiple clients in your application to access multiple endpoints or utilize different
-adapters.
-
-Clients are referenced by an arbitrary name via `Kickplan.[]` or `Kickplan.client()`. Once referenced,
-the client is instantiated and stored internally in a
-[thread-safe registry](https://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Map.html).
-
-The default client is registered with the name `:default`.
+By default, the Kickplan SDK utilizes a single client for all requests. You may have noticed this client
+referenced when inspecting the resource modules:
 
 ```ruby
-# Access the default client
-Kickplan.client.class
-=> Kickplan::Client
+Kickplan::Features
+=> #<Kickplan::Client(default)>::Features
+```
 
-# These are all equivalent
-Kickplan.client.object_id
-Kickplan.client(:default).object_id
-Kickplan[:default].object_id
-=> 3180
+There may be scenarios in which multiple clients are necessary (different endpoints, products, etc.). The
+Kickplan SDK has a [thread-safe registry](https://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Map.html) that stores all instantiated clients so
+you don't have keep up the client instance yourself.
 
-# Instantiate a new client
-Kickplan[:foobar].class
-=> Kickplan::Client
+To create a new client, simply reference it by name using `Kickplan[]` or `Kickplan.client()`:
+
+```ruby
+# Equivalent
+Kickplan[:custom]
+Kickplan.client(:custom)
+=> #<Kickplan::Client(custom)>
 
 # Clients are stored as singleton objects
-Kickplan[:foobar].object_id == Kickplan[:foobar].object
+Kickplan[:custom].object_id == Kickplan[:custom].object_id
 => true
+```
+
+Resources are accessed in the same manner as using the default client:
+
+```ruby
+Kickplan[:custom]::Features
+=> #<Kickplan::Client(custom)>::Features
+```
+
+The default client can also be accessed directly, though this is normally omitted. However, when
+using multiple clients, you may prefer to access the default client explicitly for clarity or
+configuration purposes:
+
+```ruby
+# Equivalent
+Kickplan::Features
+Kickplan[:default]::Features
+=> #<Kickplan::Client(default)>::Features
 ```
 
 ### Configuration
@@ -141,29 +176,17 @@ end
 Kickplan.client.config.access_token
 => "1234"
 
-Kickplan[:foobar].config.access_token
+Kickplan[:custom].config.access_token
 => "1234"
 
 # Client configuration
-Kickplan[:foobar].configure do |config|
+Kickplan[:custom].configure do |config|
   config.access_token = "4321"
 end
 
-Kickplan.client.config.access_token
+Kickplan.config.access_token
 => "1234"
 
-Kickplan[:foobar].config.access_token
+Kickplan[:custom].config.access_token
 => "4321"
-```
-
-### Resources
-
-Resources on custom clients are referenced with the same syntax as the default client:
-
-```ruby
-# Default client
-Kickplan::Features.resolve(...)
-
-# Custom client
-Kickplan[:foobar]::Features.resolve(...)
 ```
