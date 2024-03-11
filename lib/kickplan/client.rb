@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-module Features
-end
-
 module Kickplan
   require_relative "adapters"
   require_relative "concurrency"
