@@ -99,7 +99,8 @@ RSpec.describe Kickplan::Adapters::HTTP do
     let(:params) {{
       key: "seats_used",
       value: 3,
-      account_key: "9a592f57-6da0-408e-99e7-8918b48a7dbe"
+      account_key: "9a592f57-6da0-408e-99e7-8918b48a7dbe",
+      time: DateTime.now()
     }}
 
     it "creates a POST request for 'metrics/set'" do

@@ -7,6 +7,7 @@ module Kickplan
         attribute :key, Types::String
         attribute :value, Types::Any
         attribute :account_key, Types::String
+        attribute? :time, Types::DateTime
       end
     end
   end
