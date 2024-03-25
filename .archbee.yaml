@@ -1,6 +1,6 @@
 root: ./docs
 structure:
-  readme: Introduction.md
+  readme: Overview.md
   summary: Summary.md
 shadowDocs: 
     - "*"

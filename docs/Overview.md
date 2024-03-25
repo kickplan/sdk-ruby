@@ -1,3 +1,30 @@
+
+## Getting Started
+
+Kickplan is an innovative approach to powering SaaS app monetization by providing infrastructure to automate and control your accounts' entitlements.
+
+For a full overview of Kickplan, its benefits and features, please visit [`docs.kickplan.com`](https://docs.kickplan.com).
+
+## Installation
+
+Add the following to your Gemfile and run `bundle install`.
+
+```ruby
+gem "kickplan-sdk", :git => "git@github.com:kickplan/sdk-ruby.git"  
+```
+
+Create an initializer called `kickplan.rb` and add the following.
+
+```ruby
+require 'kickplan'
+
+Kickplan.configure do |config|
+  config.endpoint     = ENV['KICKPLAN_CONTROL_PLANE']
+  config.access_token = ENV['KICKPLAN_API_KEY']
+  config.adapter = :http
+end
+```
+
 ## Configuration
 
 Config options can be found in the [`Configuration`](https://github.com/kickplan/sdk-ruby/blob/main/lib/kickplan/configuration.rb) module.
