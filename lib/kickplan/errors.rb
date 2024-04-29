@@ -5,8 +5,8 @@ module Kickplan
 
   # Generic errors
   ClientError = Class.new(Error)
-  HttpError = Class.new(Error)
   ServiceError = Class.new(Error)
+  ServerError = Class.new(Error)
 
   module Errors
     # Client errors

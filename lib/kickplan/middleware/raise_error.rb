@@ -17,8 +17,6 @@ module Kickplan
           fail Errors::NotAuthorized, response.body
         when 404
           fail Errors::NotFound, response.body
-        when 500
-          fail ServerError, response.body
         when (400..499)
           fail ServiceError, response.body
         when (500..599)
