@@ -5,7 +5,7 @@ http_interactions:
     uri: https://example.com/api/metrics/set
     body:
       encoding: UTF-8
-      string: '{"key":"seats_used","value":3,"account_key":"9a592f57-6da0-408e-99e7-8918b48a7dbe","time":"2024-03-22T13:44:32-07:00"}'
+      string: '{"key":"seats_used","value":3,"account_key":"9a592f57-6da0-408e-99e7-8918b48a7dbe","idempotency_key":"sdk-ruby-test","time":"2024-04-29T12:20:34-07:00"}'
     headers:
       User-Agent:
       - Kickplan SDK v0.1.0
@@ -23,19 +23,19 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       Date:
-      - Fri, 22 Mar 2024 20:44:32 GMT
+      - Mon, 29 Apr 2024 19:20:34 GMT
       Server:
-      - Fly/0052f39f (2024-03-18)
+      - Fly/a7fb3290 (2024-04-29)
       X-Request-Id:
-      - F78xAyzwC5GbEPAAAAfB
+      - F8rWe5bhYVQbs9oAABch
       Via:
       - 1.1 fly.io
       Fly-Request-Id:
-      - 01HSKYGYZ88KB11CEPG7FWM508-sea
+      - 01HWNMTGCZ5PX9XXTPTQ970QA5-sea
       Content-Length:
       - '0'
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Fri, 22 Mar 2024 20:44:33 GMT
+  recorded_at: Mon, 29 Apr 2024 19:20:34 GMT
 recorded_with: VCR 6.2.0
