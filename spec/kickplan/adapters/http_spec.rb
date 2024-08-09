@@ -47,6 +47,16 @@ RSpec.describe Kickplan::Adapters::HTTP do
     end
   end
 
+  describe "#flush_metrics", vcr: { cassette_name: "metrics/flush" } do
+    it "creates a POST request for 'metrics/flush'" do
+      expect(adapter.connection).to receive(:post).
+        with("metrics/flush").
+        and_call_original
+
+      expect(metrics.flush).to be true
+    end
+  end
+
   describe "#resolve_feature", vcr: { cassette_name: "features/resolve" } do
     let(:key) { "seats" }
     let(:params) {{
