@@ -23,6 +23,10 @@ module Kickplan
           "#configure_feature is not defined for #{self.class}"
       end
 
+      def flush_metrics
+        post("metrics/flush").success?
+      end
+
       def resolve_feature(key, params)
         post("features/#{key}/resolve", params.to_h).body
       end

@@ -50,6 +50,10 @@ module Kickplan
         end
       end
 
+      def flush_metrics
+        true
+      end
+
       def set_metric(params)
         metrics["#{params.key}.#{params.account_key}"] = params.value
         true
