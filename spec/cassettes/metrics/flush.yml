@@ -7,6 +7,8 @@ http_interactions:
       encoding: UTF-8
       string: ''
     headers:
+      Authorization:
+      - Bearer <KICKPLAN_ACCESS_TOKEN>
       User-Agent:
       - Kickplan SDK v0.1.0
       Content-Length:
@@ -23,19 +25,19 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       Date:
-      - Fri, 09 Aug 2024 18:34:47 GMT
+      - Fri, 20 Sep 2024 21:15:12 GMT
       Server:
-      - Fly/9fe23f3e1 (2024-07-31)
+      - Fly/0c45e4378 (2024-09-20)
       X-Request-Id:
-      - F-ojLekHrWSMArsAAAbh
+      - F_cQTr5peB3Mn6cAAAjx
       Via:
       - 1.1 fly.io
       Fly-Request-Id:
-      - 01J4W6QZTQJ40RAVY680K1H78S-sea
+      - 01J88MKX7TAQV2Q0CY8V3F6K48-sea
       Content-Length:
       - '0'
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Fri, 09 Aug 2024 18:34:47 GMT
+  recorded_at: Fri, 20 Sep 2024 21:15:12 GMT
 recorded_with: VCR 6.2.0

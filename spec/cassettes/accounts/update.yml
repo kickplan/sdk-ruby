@@ -7,6 +7,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"name":"Acme Inc.","custom_fields":{"salesforce-id":"4321"},"account_plans":[{"plan_key":"large"}],"feature_overrides":[{"override":"variant_key","feature_key":"metrics","variant_key":"false"}]}'
     headers:
+      Authorization:
+      - Bearer <KICKPLAN_ACCESS_TOKEN>
       User-Agent:
       - Kickplan SDK v0.1.0
       Content-Type:
@@ -25,20 +27,20 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 22 Feb 2024 20:13:06 GMT
+      - Fri, 20 Sep 2024 21:15:12 GMT
       Server:
-      - Fly/17d0263d (2024-02-15)
+      - Fly/0c45e4378 (2024-09-20)
       X-Request-Id:
-      - F7ZId48CSOea9CUAAAGB
+      - F_cQTsF2QRqFeoEAAAkB
       Transfer-Encoding:
       - chunked
       Via:
       - 1.1 fly.io
       Fly-Request-Id:
-      - 01HQ976J0QMZMXMS6DMNZ9KETD-sea
+      - 01J88MKX9DGNZGJHJNTVYHGG6B-sea
     body:
       encoding: ASCII-8BIT
-      string: '{"feature_overrides":["metrics/false"],"inserted_at":"2024-02-22T20:07:44.706979Z","key":"acme","name":"Acme
-        Inc.","plans":["large"],"updated_at":"2024-02-22T20:13:06.995778Z"}'
-  recorded_at: Thu, 22 Feb 2024 20:13:07 GMT
+      string: '{"feature_overrides":["metrics/false"],"inserted_at":"2024-09-20T21:15:11.922049Z","key":"acme","name":"Acme
+        Inc.","plans":[],"updated_at":"2024-09-20T21:15:12.603703Z"}'
+  recorded_at: Fri, 20 Sep 2024 21:15:12 GMT
 recorded_with: VCR 6.2.0
