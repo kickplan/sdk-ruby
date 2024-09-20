@@ -13,7 +13,7 @@ module Kickplan
   module Default
     ADAPTER = :memory
 
-    ENDPOINT = "https://api.kickplan.io"
+    ENDPOINT = "https://service.kickplan.io/api"
 
     MIDDLEWARE = Faraday::RackBuilder.new do |builder|
       builder.use Faraday::Request::Json
