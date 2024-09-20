@@ -14,9 +14,6 @@ module Kickplan
 
     def initialize(name)
       @name = name.to_s
-
-      # Use global configuration as client defaults
-      config.update(Kickplan.config.values)
     end
 
     def adapter
