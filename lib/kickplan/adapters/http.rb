@@ -51,6 +51,7 @@ module Kickplan
             proxy: config.proxy,
             builder: config.middleware,
             headers: {
+              authorization: "Bearer #{config.access_token}",
               user_agent: config.user_agent
             }
           )

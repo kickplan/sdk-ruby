@@ -5,7 +5,6 @@ require "spec_helper"
 RSpec.describe Kickplan::Adapters::HTTP do
   Kickplan[:http].configure do |config|
     config.adapter = :http
-    config.endpoint = ENV.fetch("KICKPLAN_ENDPOINT", "https://example.com/api")
   end
 
   let(:client) { Kickplan.client(:http) }
@@ -58,11 +57,9 @@ RSpec.describe Kickplan::Adapters::HTTP do
   end
 
   describe "#resolve_feature", vcr: { cassette_name: "features/resolve" } do
-    let(:key) { "seats" }
+    let(:key) { "contact-limit" }
     let(:params) {{
-      context: {
-        account_key: "9a592f57-6da0-408e-99e7-8918b48a7dbe"
-      }
+      context: { account_key: "acme" }
     }}
 
     it "creates a POST request for 'features/:key'" do
@@ -84,9 +81,7 @@ RSpec.describe Kickplan::Adapters::HTTP do
 
   describe "#resolve_features", vcr: { cassette_name: "features/resolve-all" } do
     let(:params) {{
-      context: {
-        account_key: "9a592f57-6da0-408e-99e7-8918b48a7dbe"
-      }
+      context: { account_key: "acme" }
     }}
 
     it "creates a POST request for 'features'" do
