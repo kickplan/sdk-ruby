@@ -7,6 +7,10 @@ RSpec.describe Kickplan do
     expect(Kickplan.client).to be Kickplan.client(:default)
   end
 
+  it "has a default config" do
+    expect(Kickplan.config).to be Kickplan[:default].config
+  end
+
   it "has default resources" do
     expect(Kickplan::Features).to be Kickplan[:default]::Features
   end

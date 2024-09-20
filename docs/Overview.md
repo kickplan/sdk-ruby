@@ -190,23 +190,22 @@ Kickplan[:default]::Features
 
 ### Configuration
 
-The Kickplan SDK can be configured globally or on a per-client level. By default,
-all clients will utilize the global configuration but you can also configure the client
-directly:
+Each Kickplan client has it own isolated configuration. This does mean that each will need
+to be configured individually.
 
 ```ruby
-# Global configuration
+# Default client config
 Kickplan.configure do |config|
   config.access_token = "1234"
 end
 
-Kickplan.client.config.access_token
+Kickplan.config.access_token
 => "1234"
 
 Kickplan[:custom].config.access_token
-=> "1234"
+=> nil
 
-# Client configuration
+# Custom client config
 Kickplan[:custom].configure do |config|
   config.access_token = "4321"
 end

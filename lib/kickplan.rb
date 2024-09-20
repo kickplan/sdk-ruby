@@ -11,14 +11,15 @@ require "forwardable"
 
 module Kickplan
   require_relative "kickplan/client"
-  require_relative "kickplan/configuration"
   require_relative "kickplan/version"
-
-  extend Configuration
 
   @_clients = Concurrent::Map.new
 
   class << self
+    extend Forwardable
+
+    delegate [:config, :configure] => :client
+
     def client(name = :default)
       clients.fetch_or_store(name.to_s) { Client.new(name) }
     end
