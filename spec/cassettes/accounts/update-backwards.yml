@@ -1,11 +1,11 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: https://example.com/api/accounts
+    method: put
+    uri: https://example.com/api/accounts/acme
     body:
       encoding: UTF-8
-      string: '{"key":"acme","name":"Acme Inc.","custom_fields":{"salesforce-id":"1234"},"account_plans":[{"plan_key":"small"}],"feature_overrides":[{"override":"variant_key","feature_key":"metrics","variant_key":"true"}]}'
+      string: '{"name":"Acme Inc.","custom_fields":{"salesforce-id":"4321"},"account_plans":[{"plan_key":"large"}],"feature_overrides":[{"override":"variant_key","feature_key":"metrics","variant_key":"false"}]}'
     headers:
       Authorization:
       - Bearer <KICKPLAN_ACCESS_TOKEN>
@@ -31,16 +31,16 @@ http_interactions:
       Server:
       - Fly/0c45e4378 (2024-09-20)
       X-Request-Id:
-      - F_cQTpk8G2KbVvQAAAjR
+      - F_cQTsF2QRqFeoEAAAkB
       Transfer-Encoding:
       - chunked
       Via:
       - 1.1 fly.io
       Fly-Request-Id:
-      - 01J88MKWMANXGW1D92Z1105K9Y-sea
+      - 01J88MKX9DGNZGJHJNTVYHGG6B-sea
     body:
       encoding: ASCII-8BIT
-      string: '{"feature_overrides":[{"feature_key": "metrics", "variant_key": "true"}],"inserted_at":"2024-09-20T21:15:11.922049Z","key":"acme","name":"Acme
-        Inc.","plans":[],"updated_at":"2024-09-20T21:15:11.922049Z"}'
+      string: '{"feature_overrides":["metrics/false"],"inserted_at":"2024-09-20T21:15:11.922049Z","key":"acme","name":"Acme
+        Inc.","plans":[],"updated_at":"2024-09-20T21:15:12.603703Z"}'
   recorded_at: Fri, 20 Sep 2024 21:15:12 GMT
 recorded_with: VCR 6.2.0
