@@ -46,6 +46,36 @@ RSpec.describe Kickplan::Adapters::HTTP do
     end
   end
 
+  describe "#create_account (backwards-compatible)", vcr: { cassette_name: "accounts/create-backwards" } do
+    let(:params) {{
+      key: "acme",
+      name: "Acme Inc.",
+      account_plans: [{ plan_key: "small" }],
+      custom_fields: { "salesforce-id" => "1234" },
+      feature_overrides: [{
+        override: "variant_key",
+        feature_key: "metrics",
+        variant_key: "true"
+      }]
+    }}
+
+    it "creates a POST request for 'accounts'" do
+      expect(adapter.connection).to receive(:post).
+        with("accounts", hash_including(params)).
+        and_call_original
+
+      accounts.create(params)
+    end
+
+    it "returns Kickplan::Schemas::Account", :aggregate_failures do
+      response = accounts.create(params)
+
+      expect(response).to be_a Kickplan::Schemas::Account
+      expect(response.key).to eq "acme"
+      expect(response.name).to eq "Acme Inc."
+    end
+  end
+
   describe "#flush_metrics", vcr: { cassette_name: "metrics/flush" } do
     it "creates a POST request for 'metrics/flush'" do
       expect(adapter.connection).to receive(:post).
@@ -119,6 +149,36 @@ RSpec.describe Kickplan::Adapters::HTTP do
   end
 
   describe "#update_account", vcr: { cassette_name: "accounts/update" } do
+    let(:key) { "acme" }
+    let(:params) {{
+      name: "Acme Inc.",
+      account_plans: [{ plan_key: "large" }],
+      custom_fields: { "salesforce-id" => "4321" },
+      feature_overrides: [{
+        override: "variant_key",
+        feature_key: "metrics",
+        variant_key: "false"
+      }]
+    }}
+
+    it "creates a POST request for 'accounts/:key'" do
+      expect(adapter.connection).to receive(:put).
+        with("accounts/#{key}", hash_including(params)).
+        and_call_original
+
+      accounts.update(key, params)
+    end
+
+    it "returns Kickplan::Schemas::Account", :aggregate_failures do
+      response = accounts.update(key, params)
+
+      expect(response).to be_a Kickplan::Schemas::Account
+      expect(response.key).to eq "acme"
+      expect(response.name).to eq "Acme Inc."
+    end
+  end
+
+  describe "#update_account (backwards-compatible)", vcr: { cassette_name: "accounts/update-backwards" } do
     let(:key) { "acme" }
     let(:params) {{
       name: "Acme Inc.",

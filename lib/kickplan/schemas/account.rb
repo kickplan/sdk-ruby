@@ -9,7 +9,7 @@ module Kickplan
       # @todo Update rpc response format
       attribute? :custom_fields, Types::Hash
       attribute? :account_plans, Types::Array.of(Types::String)
-      attribute? :feature_overrides, Types::Array.of(Types::String)
+      attribute? :feature_overrides, Types::Array
     end
   end
 end
