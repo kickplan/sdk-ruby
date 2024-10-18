@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://example.com/api/billable_objects
+    body:
+      encoding: UTF-8
+      string: '{"object_id":"1234","object_type":"license","account_key":"acme","properties":{"active":true}}'
+    headers:
+      Authorization:
+      - Bearer <KICKPLAN_ACCESS_TOKEN>
+      User-Agent:
+      - Kickplan SDK v0.1.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 18 Oct 2024 22:41:08 GMT
+      Server:
+      - Fly/27d4b875a (2024-10-17)
+      X-Request-Id:
+      - F_-tPxeckg4KqocAAAgh
+      Transfer-Encoding:
+      - chunked
+      Via:
+      - 1.1 fly.io
+      Fly-Request-Id:
+      - 01JAGWNCA73T2HG54HFF9TZ3XV-sea
+    body:
+      encoding: ASCII-8BIT
+      string: '{"account_key":"acme","inserted_at":"2024-10-18T22:41:08.428934Z","object_id":"1234","object_type":"license","properties":{"active":true},"updated_at":"2024-10-18T22:41:08.428934Z"}'
+  recorded_at: Fri, 18 Oct 2024 22:41:08 GMT
+recorded_with: VCR 6.2.0

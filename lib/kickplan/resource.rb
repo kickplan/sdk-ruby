@@ -23,6 +23,7 @@ module Kickplan
   end
 
   require_relative "resources/accounts"
+  require_relative "resources/billable_objects"
   require_relative "resources/features"
   require_relative "resources/metrics"
 end

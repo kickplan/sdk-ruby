@@ -21,5 +21,6 @@ module Kickplan
   end
 
   require_relative "schemas/account"
+  require_relative "schemas/billable_object"
   require_relative "schemas/resolution"
 end
