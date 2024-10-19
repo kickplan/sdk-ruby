@@ -12,6 +12,7 @@ module Kickplan
 
   require_relative "requests/accounts/create"
   require_relative "requests/accounts/update"
+  require_relative "requests/billable_objects/upsert"
   require_relative "requests/features/resolve"
   require_relative "requests/metrics/set"
 

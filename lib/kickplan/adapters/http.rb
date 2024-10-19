@@ -43,6 +43,10 @@ module Kickplan
         put("accounts/#{key}", params.to_h).body
       end
 
+      def upsert_billable_object(params)
+        post("billable_objects", params.to_h).body
+      end
+
       # @api private
       def connection
         memoize do

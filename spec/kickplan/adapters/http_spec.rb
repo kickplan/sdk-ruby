@@ -11,6 +11,7 @@ RSpec.describe Kickplan::Adapters::HTTP do
 
   # Test the adapter through the resource interface
   let(:accounts) { client::Accounts }
+  let(:billable_objects) { client::BillableObjects }
   let(:metrics) { client::Metrics }
   let(:features) { client::Features }
 
@@ -205,6 +206,36 @@ RSpec.describe Kickplan::Adapters::HTTP do
       expect(response).to be_a Kickplan::Schemas::Account
       expect(response.key).to eq "acme"
       expect(response.name).to eq "Acme Inc."
+    end
+  end
+
+  describe "#upsert_billable_object",
+    vcr: { cassette_name: "billable_objects/upsert" } do
+    let(:params) {{
+      external_id: "1234",
+      external_type: "license",
+      account_key: "acme",
+      properties: {
+        active: true
+      }
+    }}
+
+    it "creates a POST request for 'billable_objects'" do
+      expect(adapter.connection).to receive(:post).
+        with("billable_objects", hash_including(params)).
+        and_call_original
+
+      billable_objects.upsert(params)
+    end
+
+    it "returns Kickplan::Schemas::BillableObject", :aggregate_failures do
+      response = billable_objects.upsert(params)
+
+      expect(response).to be_a Kickplan::Schemas::BillableObject
+      expect(response.external_id).to eq "1234"
+      expect(response.external_type).to eq "license"
+      expect(response.account_key).to eq "acme"
+      expect(response.properties).to eq params[:properties].transform_keys(&:to_s)
     end
   end
 end
