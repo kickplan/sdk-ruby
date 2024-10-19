@@ -71,6 +71,10 @@ module Kickplan
         end
       end
 
+      def upsert_billable_object(params)
+        true
+      end
+
       # @api private
       def accounts
         memoize { Concurrent::Map.new }
