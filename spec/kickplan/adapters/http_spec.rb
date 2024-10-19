@@ -212,8 +212,8 @@ RSpec.describe Kickplan::Adapters::HTTP do
   describe "#upsert_billable_object",
     vcr: { cassette_name: "billable_objects/upsert" } do
     let(:params) {{
-      object_id: "1234",
-      object_type: "license",
+      external_id: "1234",
+      external_type: "license",
       account_key: "acme",
       properties: {
         active: true
@@ -232,8 +232,8 @@ RSpec.describe Kickplan::Adapters::HTTP do
       response = billable_objects.upsert(params)
 
       expect(response).to be_a Kickplan::Schemas::BillableObject
-      expect(response.object_id).to eq "1234"
-      expect(response.object_type).to eq "license"
+      expect(response.external_id).to eq "1234"
+      expect(response.external_type).to eq "license"
       expect(response.account_key).to eq "acme"
       expect(response.properties).to eq params[:properties].transform_keys(&:to_s)
     end
