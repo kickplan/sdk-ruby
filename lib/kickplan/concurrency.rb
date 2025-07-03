@@ -33,7 +33,13 @@ module Kickplan
     private
 
     def memoization_variable(name)
-      ["@", name.to_s].join
+      # Extract just the method name from patterns like "Kickplan::Client#adapter"
+      method_name = name.to_s.split('#').last || name.to_s
+      # Replace any non-alphanumeric characters with underscores
+      sanitized = method_name.gsub(/[^a-zA-Z0-9_]/, '_')
+      # Ensure it starts with a letter or underscore
+      sanitized = "_#{sanitized}" unless sanitized.match?(/\A[a-zA-Z_]/)
+      ["@", sanitized].join
     end
 
     module Initializer
