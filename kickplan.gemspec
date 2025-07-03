@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "dry-types", ">= 1.7"
   spec.add_runtime_dependency "faraday", ">= 1.0"
 
+  spec.add_development_dependency "base64" # Required for Ruby 3.4+
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "dotenv", "~> 2.0"
   spec.add_development_dependency "pry", "~> 0.14"
