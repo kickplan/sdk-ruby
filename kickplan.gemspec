@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 2.7.0"
+  spec.required_ruby_version = ">= 3.3"
 
   spec.add_runtime_dependency "concurrent-ruby", ">= 1.0"
   spec.add_runtime_dependency "dry-configurable", ">= 1.0"
@@ -28,8 +28,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "bigdecimal" # Required for Ruby 3.4+
 
   spec.add_development_dependency "base64" # Required for Ruby 3.4+
-  spec.add_development_dependency "bundler", "~> 2.0"
-  spec.add_development_dependency "dotenv", "~> 2.0"
+  spec.add_development_dependency "bundler", ">= 2.0"
+  spec.add_development_dependency "dotenv", ">= 2.0"
   spec.add_development_dependency "pry", "~> 0.14"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.0"
