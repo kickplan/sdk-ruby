@@ -28,6 +28,10 @@ VCR.configure do |c|
   c.hook_into :faraday, :webmock
   c.configure_rspec_metadata!
 
+  c.ignore_request do |request|
+    URI(request.uri).port == 1234
+  end
+
   c.filter_sensitive_data("<KICKPLAN_ACCESS_TOKEN>") { ENV["KICKPLAN_ACCESS_TOKEN"] }
 
   c.before_http_request do |request|

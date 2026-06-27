@@ -5,7 +5,7 @@ module Kickplan
     class HTTP < Adapter
       extend Forwardable
 
-      delegate %i(get post put delete) => :connection
+      delegate %i(get post put patch delete) => :connection
 
       # @deprecated
       def configure_account(params)
